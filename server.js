@@ -1,15 +1,30 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-new WebpackDevServer(webpack(config), {
-  publicPath: config.output.publicPath,
-  hot: true,
-  historyApiFallback: true
-}).listen(3000, 'localhost', function (err, result) {
+const app = express();
+
+const host = 'http://localhost';
+const port = 3000;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/static', express.static(path.join(__dirname, 'dist')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.post('*', (req, res) => {
+  console.log("to: " + req.path);
+  console.log(Object.keys(req.body)[0]);
+  res.end();
+});
+
+app.listen(port, 'localhost', (err) => {
   if (err) {
     console.log(err);
+    return;
   }
-
-  console.log('Listening at localhost:3000');
+  console.info('==> Listening on port %s. Open up %s:%s/ in your browser.', port, host, port);
 });
