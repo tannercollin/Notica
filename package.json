@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "node serverdev.js",
-	"build": "webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "build": "webpack --config ./webpack.production.config.js --progress --profile --colors",
     "start": "npm run build && node server.js",
     "lint": "eslint src"
   },
@@ -20,9 +20,11 @@
     "webpack-dev-server": "^1.8.2"
   },
   "dependencies": {
-	"body-parser": "^1.15.2",
+    "body-parser": "^1.15.2",
     "freezer-js": "^0.6.0",
     "react": "^0.13.0",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "shortid": "^2.2.6",
+    "socket.io": "^1.7.2"
   }
 }

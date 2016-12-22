@@ -7,8 +7,9 @@ class App extends React.Component {
 		this.publishRouter( context.router );
 	}
 	render() {
+		let params = this.context.router.getCurrentParams();
 		return (
-			<RouteHandler />
+			<RouteHandler {...params} />
 		);
 	}
 	publishRouter( router ){

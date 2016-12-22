@@ -1,0 +1,27 @@
+body {
+	margin: 0;
+}
+
+.hero {
+	background: #84DCCF;
+	text-align: center;
+	box-shadow: 0 0 7px #555;
+}
+
+.title {
+	padding-top: 2.5rem;
+}
+
+.tagline {
+	padding-bottom: 2.5rem;
+}
+
+.content {
+	margin: auto;
+	max-width: 800px;
+}
+
+.error {
+	color: #cc0000;
+	font-size: 2rem;
+}
