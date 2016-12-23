@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import io from 'socket.io-client';
 
 export default class NotifPage extends React.Component {
 	constructor(props) {
@@ -10,13 +11,27 @@ export default class NotifPage extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		let socket = io.connect();
+
+		let room = this.props.urlid;
+
+		socket.on('connect', () => {
+			socket.emit('room', room);
+		});
+
+		socket.on('message', (data) => {
+			new Notification(data);
+		});
+	}
+
 	checkperm(permission) {
 		if (permission === 'granted') {
 			this.setState({haveperm: true});
 		}
 	}
 
-	render(){
+	render() {
 		let supported = ("Notification" in window);
 
 		if (supported) {
