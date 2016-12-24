@@ -6,10 +6,16 @@ body {
 	background: #84DCCF;
 	text-align: center;
 	box-shadow: 0 0 7px #555;
+	margin-bottom: 2.0rem;
 }
 
 .title {
-	padding-top: 2.5rem;
+	padding-top: 1rem;
+	font-size: 5rem;
+}
+.title a {
+	color: black;
+	text-decoration: none;
 }
 
 .tagline {
@@ -24,4 +30,8 @@ body {
 .error {
 	color: #cc0000;
 	font-size: 2rem;
+}
+
+code {
+	white-space: normal;
 }

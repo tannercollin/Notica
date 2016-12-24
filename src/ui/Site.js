@@ -4,6 +4,7 @@ import Home from './Home';
 import NotifPage from './NotifPage';
 import Error from './Error';
 import Shortid from 'shortid';
+import { Router, Route, Link } from 'react-router';
 
 export default class Site extends React.Component {
 	render(){
@@ -24,10 +25,12 @@ export default class Site extends React.Component {
 			<div>
 				<div className="hero">
 					<div className="title">
-						<h1>Notify</h1>
+						<Link to={'/'}>
+							Notica
+						</Link>
 					</div>
 					<div className="tagline">
-						Send a browser notification from your terminal. No installation.
+						Send a browser notification from your terminal. No installation. No registration.
 					</div>
 				</div>
 				{page}
