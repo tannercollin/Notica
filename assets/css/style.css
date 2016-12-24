@@ -17,9 +17,18 @@ body {
 	color: black;
 	text-decoration: none;
 }
+.title .name {
+	vertical-align: middle;
+}
+.title img {
+	padding-right: 0.5rem;
+	vertical-align: middle;
+	width: 5rem;
+}
 
 .tagline {
 	padding-bottom: 2.5rem;
+	font-size: 1.75rem;
 }
 
 .content {
@@ -29,9 +38,12 @@ body {
 
 .error {
 	color: #cc0000;
-	font-size: 2rem;
 }
 
 code {
 	white-space: normal;
+}
+
+.smallcode {
+	padding: 0;
 }

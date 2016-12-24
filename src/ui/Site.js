@@ -26,11 +26,12 @@ export default class Site extends React.Component {
 				<div className="hero">
 					<div className="title">
 						<Link to={'/'}>
-							Notica
+							<img src="/assets/img/logo.svg" />
+							<span className="name">Notica</span>
 						</Link>
 					</div>
 					<div className="tagline">
-						Send a browser notification from your terminal. No installation. No registration.
+						Send browser notifications from your terminal. No installation. No registration.
 					</div>
 				</div>
 				{page}
