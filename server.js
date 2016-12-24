@@ -17,14 +17,18 @@ app.get('/*', (req, res) => {
 
 app.post('*', (req, res) => {
 	let id = req.path.substring(1);
-	let message = Object.keys(req.body)[0];
+	let data = Object.keys(req.body)[0];
 
-	console.log("to: " + id);
-	console.log(message);
+	if (data && data.substring(0,2) === 'd:') {
+		let message = data.substring(2);
 
-	io.in(id).emit('message', message);
+		console.log("to: " + id);
+		console.log(message);
 
-	res.end();
+		io.in(id).emit('message', message);
+
+		res.end();
+	}
 });
 
 const server = app.listen(port, 'localhost', (err) => {
