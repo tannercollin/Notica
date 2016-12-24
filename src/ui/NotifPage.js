@@ -7,17 +7,27 @@ export default class NotifPage extends React.Component {
 		super(props);
 
 		this.state = {
-			haveperm: false
+			haveperm: false,
+			connected: false
 		}
 	}
 
 	componentDidMount() {
+		this.connect();
+	}
+
+	connect() {
 		let socket = io.connect();
 
 		let room = this.props.urlid;
 
 		socket.on('connect', () => {
 			socket.emit('room', room);
+			this.setState({connected: true});
+
+			socket.on('disconnect', () => {
+				this.setState({connected: false});
+			});
 		});
 
 		socket.on('message', (data) => {
@@ -56,8 +66,16 @@ export default class NotifPage extends React.Component {
 								Check Again
 							</a>
 						</div>}
-						{ this.state.haveperm && supported && <p>
-							This page is now monitoring for notifications.
+						{ !this.state.connected && supported && <div className="error">
+							<p>
+								Error: Unable to connect to the Notica server :(
+							</p>
+							<p>
+								Attempting to reconnect...
+							</p>
+						</div>}
+						{ this.state.haveperm && this.state.connected && supported && <p>
+							This page is monitoring for notifications.
 						</p>}
 					</div>
 				</div>
