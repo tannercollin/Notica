@@ -8,16 +8,22 @@ export default class NotifPage extends React.Component {
 
 		this.state = {
 			haveperm: false,
-			connected: false
+			connected: false,
+			socket: io.connect()
 		}
 	}
 
 	componentDidMount() {
 		this.connect();
+		this.checksupport();
+	}
+
+	componentWillUnmount() {
+		this.setState({socket: this.state.socket.removeAllListeners()});
 	}
 
 	connect() {
-		let socket = io.connect();
+		let socket = this.state.socket;
 
 		let room = this.props.urlid;
 
@@ -31,8 +37,28 @@ export default class NotifPage extends React.Component {
 		});
 
 		socket.on('message', (data) => {
-			new Notification(data);
+			new Notification(
+				data || 'Received a notification!',
+				{
+					body: 'Notification from Notica',
+					badge: 'assets/img/icon.png',
+					icon: 'assets/img/icon.png',
+					image: 'assets/img/icon.png',
+					vibrate: 200
+				}
+			);
 		});
+	}
+
+	checksupport() {
+		let supported = ('Notification' in window);
+		this.setState({supported: supported});
+
+		if (supported) {
+			Notification.requestPermission(permission => {
+				this.checkperm(permission);
+			}.bind(this));
+		}
 	}
 
 	checkperm(permission) {
@@ -42,13 +68,9 @@ export default class NotifPage extends React.Component {
 	}
 
 	render() {
-		let supported = ("Notification" in window);
-
-		if (supported) {
-			Notification.requestPermission(permission => {
-				this.checkperm(permission);
-			}.bind(this));
-		}
+		let supported = this.state.supported;
+		let haveperm = this.state.haveperm;
+		let connected = this.state.connected;
 
 		return (
 			<div className="container">
@@ -58,7 +80,7 @@ export default class NotifPage extends React.Component {
 						{ supported || <div className="error"><p>
 							<i className="fa fa-times" aria-hidden="true"></i> This browser does not support desktop notifications.
 						</p></div>}
-						{ !this.state.haveperm && supported && <div>
+						{ !haveperm && supported && <div>
 							<p>
 								Please give this site permission to display notifications.
 								<br />
@@ -67,14 +89,14 @@ export default class NotifPage extends React.Component {
 								</a>
 							</p>
 						</div>}
-						{ !this.state.connected && supported && <div className="error">
+						{ !connected && supported && <div className="error">
 							<p>
 								<i className="fa fa-times" aria-hidden="true"></i> Unable to connect to the Notica server.
 								<br />
 								Attempting to reconnect...
 							</p>
 						</div>}
-						{ this.state.haveperm && this.state.connected && supported && <p>
+						{ haveperm && connected && supported && <p>
 							<i className="fa fa-check" aria-hidden="true"></i> This page is monitoring for notifications.
 						</p>}
 					</div>
