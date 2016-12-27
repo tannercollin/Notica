@@ -38,8 +38,8 @@ export default class NotifPage extends React.Component {
 
 		socket.on('message', (data) => {
 			console.log("Notification: " + data);
-			checkperm(Notification.permission);
-			sendNotification(data);
+			this.checkperm(Notification.permission);
+			this.sendNotification(data);
 		});
 	}
 

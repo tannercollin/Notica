@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const host = 'http://0.0.0.0';
+const host = 'http://127.0.0.1';
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));

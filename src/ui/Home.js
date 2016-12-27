@@ -35,7 +35,7 @@ export default class Home extends React.Component {
 						<p>
 							Add this line to your <code className="smallcode">.bashrc</code> file:<br />
 							<code>
-								notica() &#123; curl --data "d:$@" https://notica.us/{id}; &#125;
+								notica() &#123; curl --data "d:$*" https://notica.us/{id}; &#125;
 							</code>
 						</p>
 						<p>
@@ -51,7 +51,7 @@ export default class Home extends React.Component {
 						<p>
 							Run this command: <br />
 							<code>
-								$ echo 'notica() &#123; curl --data "d:$@" https://notica.us/{id}; &#125;' >> ~/.bashrc && source ~/.bashrc
+								$ echo 'notica() &#123; curl --data "d:$*" https://notica.us/{id}; &#125;' >> ~/.bashrc && source ~/.bashrc
 							</code>
 						</p>
 						<p>Go to this link to receive your notifications (bookmark it since it's yours): <Link to={'/' + id}>https://notica.us/{id}</Link></p>
