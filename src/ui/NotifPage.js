@@ -37,17 +37,30 @@ export default class NotifPage extends React.Component {
 		});
 
 		socket.on('message', (data) => {
-			new Notification(
-				data || 'Received a notification!',
-				{
-					body: 'Notification from Notica',
-					badge: 'assets/img/icon.png',
-					icon: 'assets/img/icon.png',
-					image: 'assets/img/icon.png',
-					vibrate: 200
-				}
-			);
+			console.log("Notification: " + data);
+			checkperm(Notification.permission);
+			sendNotification(data);
 		});
+	}
+
+	sendNotification(data) {
+		let title = data || 'Received a notification!';
+
+		let options = {
+			body: 'Notification from Notica',
+			icon: 'assets/img/icon.png',
+			iconUrl: 'assets/img/icon.png',
+			vibrate: [200, 100, 200]
+		};
+
+		try {
+			navigator.serviceWorker.register('/assets/js/sw.js').then((reg) => {
+				reg.showNotification(title, options);
+			});
+		} catch (e) { // If we are on a browser without serviceWorker
+			new Notification(title, options);
+		}
+
 	}
 
 	checksupport() {
@@ -64,6 +77,9 @@ export default class NotifPage extends React.Component {
 	checkperm(permission) {
 		if (permission === 'granted') {
 			this.setState({haveperm: true});
+		}
+		else {
+			this.setState({haveperm: false});
 		}
 	}
 
