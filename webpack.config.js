@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'eval',
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?https://notica.us',
     'webpack/hot/only-dev-server',
     './src/index'
   ],
@@ -17,6 +17,9 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
+  watchOptions: {
+    poll: true
+  },
   module: {
     loaders: [{
       test: /\.js$/,
