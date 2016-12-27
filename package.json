@@ -22,6 +22,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "freezer-js": "^0.6.0",
+    "qrcode.react": "^0.6.1",
     "react": "^0.13.0",
     "react-router": "^0.13.3",
     "shortid": "^2.2.6",

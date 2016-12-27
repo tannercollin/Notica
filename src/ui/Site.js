@@ -8,14 +8,20 @@ import { Router, Route, Link } from 'react-router';
 
 export default class Site extends React.Component {
 	render(){
-		let urlid = this.props.splat;
+		let url = this.props.splat;
 		let page = null;
+		let id = '';
 
-		if (urlid == '') {
+		if (url == '') {
 			page = <Home />;
 		}
-		else if (Shortid.isValid(urlid)) {
-			page = <NotifPage urlid={urlid} />;
+		else if (url.substring(0, 4) == 'home') {
+			id = url.substring(5);
+			page = <Home urlid={id} />;
+		}
+		else if (Shortid.isValid(url)) {
+			id = url;
+			page = <NotifPage urlid={url} />;
 		}
 		else {
 			page = <Error />;
@@ -25,7 +31,7 @@ export default class Site extends React.Component {
 			<div>
 				<div className="hero">
 					<div className="title">
-						<Link to={'/'}>
+						<Link to={'/home/' + id}>
 							<img src="/assets/img/logo.svg" />
 							<span className="name">Notica</span>
 						</Link>

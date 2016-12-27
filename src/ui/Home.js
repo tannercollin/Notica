@@ -5,7 +5,7 @@ import { Router, Route, Link } from 'react-router';
 
 export default class Home extends React.Component {
 	render(){
-		let id = Shortid.generate();
+		let id = this.props.urlid || Shortid.generate();
 
 		return (
 			<div className="container">

@@ -1,6 +1,8 @@
 'use strict';
 import React from 'react';
 import io from 'socket.io-client';
+import { Router, Route, Link } from 'react-router';
+import QRCode from 'qrcode.react';
 
 export default class NotifPage extends React.Component {
 	constructor(props) {
@@ -87,6 +89,7 @@ export default class NotifPage extends React.Component {
 		let supported = this.state.supported;
 		let haveperm = this.state.haveperm;
 		let connected = this.state.connected;
+		let urlid = this.props.urlid;
 
 		return (
 			<div className="container">
@@ -161,6 +164,16 @@ export default class NotifPage extends React.Component {
 							<code>
 								$ notica "This is awesome :)"
 							</code>
+						</p>
+						<p>
+							Need to set Notica up again? <br />
+							<Link to={'/home/' + urlid}>
+								Click here to go back to the instructions.
+							</Link>
+						</p>
+						<p>
+							Open this page on your phone:
+							<center><QRCode value={'https://notica.us/' + urlid} /></center>
 						</p>
 					</div>
 				</div>
