@@ -19,7 +19,7 @@ export default class Home extends React.Component {
 				</div>
 				<div className="row">
 					<div className="six columns">
-						<p><code>$ make all; notica Code is done compiling!</code></p>
+						<p><code>$ long-running-command; notica Finished!</code></p>
 						<p>
 							This will wait until the first command completes before running Notica. That way you can go do other things while your long task runs. Then you will recieve a notification.
 						</p>
@@ -30,6 +30,15 @@ export default class Home extends React.Component {
 				</div>
 				<div className="row">
 					<div className="twelve columns">
+						<h4>Quick Setup</h4>
+						<p>
+							Run this command: <br />
+							<code>
+								$ echo 'notica() &#123; curl --data "d:$*" https://notica.us/{id}; &#125;' >> ~/.bashrc && source ~/.bashrc
+							</code>
+						</p>
+						<p>Go to this link to receive your notifications (bookmark it since it's yours): <Link to={'/' + id}>https://notica.us/{id}</Link></p>
+
 						<h4>Setup</h4>
 						<p>Curl is required to use Notica.</p>
 						<p>
@@ -47,14 +56,16 @@ export default class Home extends React.Component {
 							<Link to={'/' + id}>https://notica.us/{id}</Link>
 						</p>
 
-						<h4>Quick Setup</h4>
+						<h4>About</h4>
 						<p>
-							Run this command: <br />
-							<code>
-								$ echo 'notica() &#123; curl --data "d:$*" https://notica.us/{id}; &#125;' >> ~/.bashrc && source ~/.bashrc
-							</code>
+							Notica was written by <a href="http://tannercollin.com" target="_blank">Tanner Collin</a> after he got tired of checking if his commands were done running.
 						</p>
-						<p>Go to this link to receive your notifications (bookmark it since it's yours): <Link to={'/' + id}>https://notica.us/{id}</Link></p>
+						<p>
+							Notica <strike>is</strike> <i>will be, once it's done,</i> free and open-source software: <a href="https://github.com/tannercollin/Notica" target="_blank">https://github.com/tannercollin/Notica</a>
+						</p>
+						<p>
+							Thanks to exdevlin for thinking of the name. Thanks to all the devs behind Node.js, React, webpack, and socket.io.
+						</p>
 					</div>
 				</div>
 			</div>
