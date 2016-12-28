@@ -9,10 +9,9 @@ const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/static', express.static(path.join(__dirname, 'dist')));
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'index.html'));
+	res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 app.post('*', (req, res) => {

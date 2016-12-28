@@ -32,7 +32,7 @@ export default class Site extends React.Component {
 				<div className="hero">
 					<div className="title">
 						<Link to={'/home/' + id}>
-							<img src="/assets/img/logo.svg" />
+							<img src="/img/logo.svg" />
 							<span className="name">Notica</span>
 						</Link>
 					</div>

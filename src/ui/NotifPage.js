@@ -50,13 +50,13 @@ export default class NotifPage extends React.Component {
 
 		let options = {
 			body: 'Notification from Notica',
-			icon: 'assets/img/icon.png',
-			iconUrl: 'assets/img/icon.png',
+			icon: 'img/icon.png',
+			iconUrl: 'img/icon.png',
 			vibrate: [200, 100, 200]
 		};
 
 		try {
-			navigator.serviceWorker.register('/assets/js/sw.js').then((reg) => {
+			navigator.serviceWorker.register('/js/sw.js').then((reg) => {
 				reg.showNotification(title, options);
 			});
 		} catch (e) { // If we are on a browser without serviceWorker
