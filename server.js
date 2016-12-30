@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const moment = require('moment');
 
 const app = express();
 
@@ -8,6 +9,10 @@ const host = 'http://127.0.0.1';
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+function log(message) {
+	console.log(moment().format() + ': ' + message);
+}
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.get('/*', (req, res) => {
@@ -21,18 +26,20 @@ app.post('*', (req, res) => {
 	if (data && data.substring(0,2) === 'd:') {
 		let message = data.substring(2);
 
-		console.log("to: " + id);
-		console.log(message);
+		log('[NOTICA] Message sent to ' + id + ': ' + message);
 
 		io.in(id).emit('message', message);
 
 		res.end();
+	} else {
+		log('Ignoring bad POST data to: ' + id);
+		res.send('Bad POST data.');
 	}
 });
 
 const server = app.listen(port, 'localhost', (err) => {
 	if (err) {
-		console.log(err);
+		log('[ERROR] Server error: ' + err);
 		return;
 	}
 	console.info('==> Listening on port %s. Open up %s:%s/ in your browser.', port, host, port);
@@ -41,11 +48,8 @@ const server = app.listen(port, 'localhost', (err) => {
 const io = require('socket.io').listen(server);
 
 io.on('connection', (socket) => {
-	console.log("new connection!");
 	socket.on('room', (room) => {
-		console.log("telling it to join room.");
+		log('New connection joining room: ' + room);
 		socket.join(room);
 	});
-
-
 });
