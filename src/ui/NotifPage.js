@@ -9,6 +9,8 @@ export default class NotifPage extends React.Component {
 		super(props);
 
 		this.state = {
+			supported: false,
+			registration: null,
 			haveperm: false,
 			connected: false,
 			socket: io.connect()
@@ -40,7 +42,6 @@ export default class NotifPage extends React.Component {
 
 		socket.on('message', (data) => {
 			console.log("Notification: " + data);
-			this.checkperm(Notification.permission);
 			this.sendNotification(data);
 		});
 	}
@@ -55,14 +56,11 @@ export default class NotifPage extends React.Component {
 			vibrate: [200, 100, 200]
 		};
 
-		try {
-			navigator.serviceWorker.register('/js/sw.js').then((reg) => {
-				reg.showNotification(title, options);
-			});
-		} catch (e) { // If we are on a browser without serviceWorker
-			new Notification(title, options);
+		if (this.state.registration) {
+			console.log(this.state.registration.showNotification(title, options));
+		} else {
+			console.log(new Notification(title, options));
 		}
-
 	}
 
 	checksupport() {
@@ -72,6 +70,14 @@ export default class NotifPage extends React.Component {
 		if (supported) {
 			Notification.requestPermission(permission => {
 				this.checkperm(permission);
+
+				try {
+					navigator.serviceWorker.register('/js/sw.js').then((reg) => {
+						this.setState({registration: reg});
+					});
+				} catch (e) { // If we are on a browser without serviceWorker
+					this.setState({registration: false});
+				}
 			}.bind(this));
 		}
 	}
