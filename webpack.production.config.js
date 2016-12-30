@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   entry: [
     './src/index'
   ],
@@ -14,10 +14,15 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      compressor: {
+      compress: {
         warnings: false
       }
     }),
+	new webpack.DefinePlugin({
+		'process.env': {
+			'NODE_ENV': JSON.stringify('production')
+		}
+	}),
     new webpack.NoErrorsPlugin()
   ],
   module: {
