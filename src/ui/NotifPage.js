@@ -128,7 +128,7 @@ export default class NotifPage extends React.Component {
 				</div>
 				<div className="row">
 					<div className="six columns">
-						<h4>Usage</h4>
+						<h4>Examples</h4>
 						<p>Here are some different ways to use Notica:</p>
 						<p>
 							Just run it from your terminal: <br />

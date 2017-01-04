@@ -21,11 +21,11 @@ export default class Home extends React.Component {
 					<div className="six columns">
 						<p><code>$ long-running-command; notica Finished!</code></p>
 						<p>
-							This will wait until the first command completes before running Notica. That way you can go do other things while your long task runs. Then you will recieve a notification.
+							This will wait until the first command completes before running Notica. That way you can go do other things while your long task runs. Then you will recieve a notification on any devices that have the Notica website open.
 						</p>
 					</div>
 					<div className="six columns">
-						<p><img className="u-max-full-width" src="https://i.imgur.com/TNb5kRQ.gif" /></p>
+						<p><img className="u-max-full-width" src="https://i.imgur.com/476ezFy.gif" /></p>
 					</div>
 				</div>
 				<div className="row">
@@ -61,7 +61,7 @@ export default class Home extends React.Component {
 							Notica was written by <a href="http://tannercollin.com" target="_blank">Tanner Collin</a> after he got tired of checking if his commands were done running.
 						</p>
 						<p>
-							Notica <strike>is</strike> <i>will be, once it's done,</i> free and open-source software: <a href="https://github.com/tannercollin/Notica" target="_blank">https://github.com/tannercollin/Notica</a>
+							Notica is free and open-source software: <a href="https://github.com/tannercollin/Notica" target="_blank">https://github.com/tannercollin/Notica</a>
 						</p>
 						<p>
 							Thanks to exdevlin for thinking of the name. Thanks to all the devs behind Node.js, React, webpack, and socket.io.
