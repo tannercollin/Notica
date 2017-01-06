@@ -1,10 +1,14 @@
 {
-  "name": "notify",
+  "name": "Notica",
   "version": "1.0.0",
-  "description": "",
+  "description": "Send browser notifications from your terminal. No installation. No registration.",
+  "repository": {
+	  "type" : "git",
+	  "url" : "https://github.com/tannercollin/Notica"
+  },
   "scripts": {
     "dev": "node serverdev.js",
-    "build": "webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "build": "webpack --config ./webpack.production.config.js --profile --display-error-details --no-color",
     "start": "npm run build && node server.js",
     "lint": "eslint src"
   },
