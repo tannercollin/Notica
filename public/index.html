@@ -1,42 +1,72 @@
 <html>
-  <head>
-	<meta charset="UTF-8">
-	<meta name="fragment" content="!">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="fragment" content="!">
 
-	<title>Notica - Notifications from Your Terminal</title>
+		<title>Notica - Notifications from Your Terminal</title>
 
-	<![if lt IE 10]>
-		<script async src="/js/es5-shim.min.js"></script>
-		<script async src="/js/es5-sham.min.js"></script>
-		<script async src="/js/html5shiv.min.js"></script>
-		<script type="text/javascript">
-			// Fake console to test in IE<9
-			if( typeof console == 'undefined' )
+		<![if lt IE 10]>
+			<script async src="/js/es5-shim.min.js"></script>
+			<script async src="/js/es5-sham.min.js"></script>
+			<script async src="/js/html5shiv.min.js"></script>
+			<script type="text/javascript">
+				// Fake console to test in IE<9
+				if( typeof console == 'undefined' )
 				console = {log: function(){ /* No console */}};
-		</script>
-	<![endif]>
+			</script>
+		<![endif]>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" integrity="sha256-t2/7smZfgrST4FS1DT0bs/KotCM74XlcqZN5Vu7xlrw=" crossorigin="anonymous" media="none" onload="if(media!='all')media='all'" />
-	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" media="none" onload="if(media!='all')media='all'" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" integrity="sha256-2YQRJMXD7pIAPHiXr0s+vlRWA7GYJEK0ARns7k2sbHY=" crossorigin="anonymous" media="all" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" media="all" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" integrity="sha256-t2/7smZfgrST4FS1DT0bs/KotCM74XlcqZN5Vu7xlrw=" crossorigin="anonymous" media="all" />
+		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" media="all" />
 
-	<link rel="stylesheet" href="/css/style.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="/css/style.css" type="text/css" media="all" />
 
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
-	<link rel="manifest" href="/manifest.json">
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-	<meta name="apple-mobile-web-app-title" content="Notica">
-	<meta name="application-name" content="Notica">
-	<meta name="theme-color" content="#ffffff">
-  </head>
-  <body>
-    <div id='root'>
-    </div>
-    <script src="/bundle.js"></script>
-  </body>
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/manifest.json">
+		<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="apple-mobile-web-app-title" content="Notica">
+		<meta name="application-name" content="Notica">
+		<meta name="theme-color" content="#ffffff">
+	</head>
+	<body>
+		<div id='root'>
+		</div>
+		<script src="/bundle.js"></script>
+		<noscript>
+			<div class="hero">
+				<div class="title">
+					<a href="#">
+						<img src="/img/logo.svg" />
+						<span class="name">Notica</span>
+					</a>
+				</div>
+				<div class="tagline">
+					Send browser notifications from your terminal. No installation. No registration.
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="twelve columns">
+						<h4>Javascript Disabled</h4>
+						<p>
+							Uh oh - It looks like Javascript is disabled or not supported in your browser.
+							This is bad news for Notica, because we need Javascript to run!
+						</p>
+						<p>
+							Without it, we are unable to display browser notifications or create a Websocket to our server :(
+						</p>
+						<p>
+							Please enable Javascript to use Notica. The site looks much prettier with it enabled!
+						</p>
+					</div>
+				</div>
+			</div>
+		</noscript>
+	</body>
 </html>
