@@ -25,7 +25,7 @@ export default class Home extends React.Component {
 						</p>
 					</div>
 					<div className="six columns">
-						<p><img className="u-max-full-width" src="https://i.imgur.com/476ezFy.gif" /></p>
+						<p><img className="u-max-full-width" src="/img/example.gif" /></p>
 					</div>
 				</div>
 				<div className="row">
