@@ -77,7 +77,7 @@ export default class Home extends React.Component {
 				} catch (e) { // If we are on a browser without serviceWorker
 					this.setState({registration: false});
 				}
-			}.bind(this));
+			});
 		}
 	}
 
