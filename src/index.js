@@ -1,10 +1,9 @@
-import React from 'react';
-import Router from 'react-router';
-import routes from './routes';
+import React from 'react'
+import { Router, Route, browserHistory } from 'react-router'
+import Site from './ui/Site';
 
-Router.run( routes, Router.HistoryLocation, function( Handler ){
-	React.render(
-		React.createElement( Handler ),
-		document.getElementById('root')
-	);
-});
+React.render((
+	<Router history={browserHistory}>
+		<Route path="/*" component={Site} />
+	</Router>
+), document.getElementById('root'))

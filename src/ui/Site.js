@@ -1,37 +1,72 @@
 'use strict';
 import React from 'react';
 import Home from './Home';
-import NotifPage from './NotifPage';
 import Error from './Error';
 import Shortid from 'shortid';
-import { Router, Route, Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 export default class Site extends React.Component {
-	render(){
-		let url = this.props.splat;
-		let page = null;
-		let id = '';
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			page: null,
+			id: '',
+			storSupport: (typeof localStorage !== 'undefined')
+		}
+	}
+
+	componentWillMount() {
+		this.setPage();
+	}
+
+	componentDidUpdate(prevProps) {
+		let oldUrl = prevProps.params.splat;
+		let newUrl = this.props.params.splat;
+		if (newUrl !== oldUrl) this.setPage();
+	}
+
+	setId(url) {
+		if (this.state.storSupport) {
+			if (localStorage.getItem('id')) {
+				this.state.id = url || localStorage.getItem('id');
+			} else {
+				this.state.id = url || Shortid.generate();
+			}
+			localStorage.setItem('id', this.state.id);
+		} else {
+			this.state.id = url || Shortid.generate();
+		}
+	}
+
+	setPage() {
+		let url = this.props.params.splat;
+
+		if (url == 'clear') {
+			localStorage.clear();
+			url = '';
+		}
 
 		if (url == '') {
-			page = <Home />;
-		}
-		else if (url.substring(0, 4) == 'home') {
-			id = url.substring(5);
-			page = <Home urlid={id} />;
+			this.setId();
+			browserHistory.push('/' + this.state.id);
+			this.state.page = <Home id={this.state.id} storSupport={this.state.storSupport} />;
 		}
 		else if (Shortid.isValid(url)) {
-			id = url;
-			page = <NotifPage urlid={url} />;
+			this.setId(url);
+			this.state.page = <Home id={this.state.id} storSupport={this.state.storSupport} />;
 		}
 		else {
-			page = <Error />;
+			this.state.page = <Error />;
 		}
+	}
 
+	render(){
 		return (
 			<div>
 				<div className="hero">
 					<div className="title">
-						<Link to={'/home/' + id}>
+						<Link to={'/' + this.state.id}>
 							<img src="/img/logo.svg" />
 							<span className="name">Notica</span>
 						</Link>
@@ -40,7 +75,7 @@ export default class Site extends React.Component {
 						Send browser notifications from your terminal. No installation. No registration.
 					</div>
 				</div>
-				{page}
+				{this.state.page}
 			</div>
 		);
 	}

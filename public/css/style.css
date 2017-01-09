@@ -6,7 +6,7 @@ body {
 	background: #84DCCF;
 	text-align: center;
 	box-shadow: 0 0 7px #555;
-	margin-bottom: 2.0rem;
+	margin-bottom: 2.5rem;
 }
 
 .title {
@@ -38,6 +38,11 @@ body {
 
 .error {
 	color: #cc0000;
+}
+
+.storSupport p {
+	background: rgba(132, 220, 207, 0.2);
+	padding: 1rem;
 }
 
 code {
