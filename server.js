@@ -20,20 +20,25 @@ app.get('/*', (req, res) => {
 });
 
 app.post('*', (req, res) => {
-	let id = req.path.substring(1);
+	let id = req.path.substring(1, 20); // Ignore first, truncate after 20
 	let data = Object.keys(req.body)[0];
 
 	if (data && data.substring(0,2) === 'd:') {
-		let message = data.substring(2);
+		if (io.sockets.adapter.rooms[id]) {
+			let message = data.substring(2);
 
-		log('[NOTICA] Message sent to ' + id + ': ' + message);
+			log('[NOTICA] Message sent to ' + id + ': ' + message);
 
-		io.in(id).emit('message', message);
+			io.in(id).emit('message', message);
 
-		res.end();
+			res.end();
+		} else {
+			log('No one in room to send data to: ' + id);
+			res.send('No devices have that Notica ID open. Please open this URL: https://notica.us/' + id + '\n');
+		}
 	} else {
 		log('Ignoring bad POST data to: ' + id);
-		res.send('Bad POST data.');
+		res.send('Bad POST data. Expecting prefix of "d:".\n');
 	}
 });
 

@@ -40,7 +40,6 @@ export default class Home extends React.Component {
 		});
 
 		socket.on('message', (data) => {
-			console.log("Notification: " + data);
 			this.sendNotification(data);
 		});
 	}
@@ -56,9 +55,9 @@ export default class Home extends React.Component {
 		};
 
 		if (this.state.registration) {
-			console.log(this.state.registration.showNotification(title, options));
+			this.state.registration.showNotification(title, options);
 		} else {
-			console.log(new Notification(title, options));
+			new Notification(title, options);
 		}
 	}
 
@@ -129,7 +128,7 @@ export default class Home extends React.Component {
 					<div className="twelve columns">
 						<h4>Usage</h4>
 						<p>
-							Notica is a Bash function / alias that sends a notification to a tab in your browser when it's ran:
+							Notica is a tool that sends a notification to a tab in your browser when it's ran:
 						</p>
 					</div>
 				</div>
@@ -214,6 +213,12 @@ export default class Home extends React.Component {
 						<h4>Tips</h4>
 						<p>Bookmark this page! It is unique to the function in your <code className="smallcode">.bashrc</code> file.
 						Notifications will be sent to all open pages with the same ID code in the URL.</p>
+						<p>Lose the link to this page? Just run Notica again: <br />
+							<code style={{display: 'block'}}>
+								$ notica <br />
+								https://notica.us/{id}
+							</code>
+						</p>
 						<p>
 							Use quotes on messages with special characters: <br />
 							<code>
