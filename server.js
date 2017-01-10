@@ -1,7 +1,10 @@
 const path = require('path');
 const express = require('express');
+const pug = require('pug');
 const bodyParser = require('body-parser');
 const moment = require('moment');
+const crypto = require('crypto');
+const base64url = require('base64-url');
 
 const app = express();
 
@@ -9,14 +12,21 @@ const host = 'http://127.0.0.1';
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.set('view engine', 'pug')
 
 function log(message) {
 	console.log(moment().format() + ': ' + message);
 }
 
+function generateID() {
+	const bytes = crypto.randomBytes(30);
+	const string = base64url.encode(bytes);
+	return string.substring(0, 8);
+}
+
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.get('/*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public/index.html'));
+	res.render('index', { secureID: generateID() })
 });
 
 app.post('*', (req, res) => {

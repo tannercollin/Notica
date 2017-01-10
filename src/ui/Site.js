@@ -31,11 +31,11 @@ export default class Site extends React.Component {
 			if (localStorage.getItem('id')) {
 				this.state.id = url || localStorage.getItem('id');
 			} else {
-				this.state.id = url || Shortid.generate();
+				this.state.id = url || secureID || Shortid.generate();
 			}
 			localStorage.setItem('id', this.state.id);
 		} else {
-			this.state.id = url || Shortid.generate();
+			this.state.id = url || secureID || Shortid.generate();
 		}
 	}
 
