@@ -27,15 +27,23 @@ export default class Site extends React.Component {
 	}
 
 	setId(url) {
+		let id = Shortid.generate();
+
+		try {
+			id = secureID;
+		} catch (err) {
+			console.log('SecureID not found. Using Shortid instead.');
+		}
+
 		if (this.state.storSupport) {
 			if (localStorage.getItem('id')) {
 				this.state.id = url || localStorage.getItem('id');
 			} else {
-				this.state.id = url || secureID || Shortid.generate();
+				this.state.id = url || id;
 			}
 			localStorage.setItem('id', this.state.id);
 		} else {
-			this.state.id = url || secureID || Shortid.generate();
+			this.state.id = url || id;
 		}
 	}
 
