@@ -40,7 +40,7 @@ You can connect to it directly or through a reverse proxy.
 ```
 
 Usage: npm start -- [options]
-(After npm run build) Usage: node server.js -- [options]
+(After npm run build) Usage: node server.js [options]
 
   Options:
 
