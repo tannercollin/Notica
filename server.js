@@ -6,10 +6,39 @@ const moment = require('moment');
 const crypto = require('crypto');
 const base64url = require('base64-url');
 
+const pjson = require('./package.json');
+var program = require('commander');
+
 const app = express();
 
-const host = 'http://127.0.0.1';
-const port = 3000;
+var options = {
+	port: 3000,
+	host: "127.0.0.1",
+	url: ""
+};
+
+program.version(pjson.version)
+	.option('-p, --port <3000>', 'Port to host')
+	.option('-H, --host <127.0.0.1>', "Ip to host")
+	.option('-u, --url <path>', 'If this parameter is blank, will be use random id as url path');
+
+program.on('--help', function() {
+	console.log('  Examples:');
+	console.log('');
+	console.log('    $ npm start -- -p 80');
+	console.log('    $ npm start -- -p 8080 -u notification');
+	console.log('');
+});
+
+program.parse(process.argv);
+
+Object.keys(options)
+	.forEach(function(key) {
+		options[key] = program[key] || options[key];
+	});
+
+const host = options.host;
+const port = options.port;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'pug')
@@ -19,9 +48,12 @@ function log(message) {
 }
 
 function generateID() {
-	const bytes = crypto.randomBytes(30);
-	const string = base64url.encode(bytes);
-	return string.substring(0, 8);
+	if(!options.url){
+		const bytes = crypto.randomBytes(30);
+		const string = base64url.encode(bytes);
+		return string.substring(0, 8);
+	}
+	return options.url;
 }
 
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -52,19 +84,21 @@ app.post('*', (req, res) => {
 	}
 });
 
-const server = app.listen(port, 'localhost', (err) => {
+const server = app.listen(port, host, (err) => {
 	if (err) {
 		log('[ERROR] Server error: ' + err);
 		return;
 	}
-	console.info('==> Listening on port %s. Open up %s:%s/ in your browser.', port, host, port);
+	console.info('==> Listening on port %s. Open up http://%s:%s/ in your browser.', port, host, port);
 });
 
 const io = require('socket.io').listen(server);
 
 io.on('connection', (socket) => {
+	var address = socket.handshake.address;
+	log('New connection from ' + address);
 	socket.on('room', (room) => {
-		log('New connection joining room: ' + room);
+		log('Joining on room: '+room)		
 		socket.join(room);
 	});
 });
