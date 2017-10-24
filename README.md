@@ -37,7 +37,7 @@ You can connect to it directly or through a reverse proxy.
 
 ### Usage
 
-```
+```text
 
 Usage: npm start -- [options]
 (After npm run build) Usage: node server.js [options]
@@ -46,14 +46,11 @@ Usage: npm start -- [options]
 
     -h, --help              output usage information
     -V, --version           output the version number
-    -p, --port <3000>       Port to host
-    -H, --host <127.0.0.1>  Ip to host
-    -u, --url <path>        If this parameter is blank, will be use random id as
- url path
+    -p, --port <3000>       Host port
+    -H, --host <127.0.0.1>  Host IP
 
-  Examples:
+  Example:
 
     $ npm start -- -p 80
-    $ npm start -- -p 8080 -u notification
 
 ```

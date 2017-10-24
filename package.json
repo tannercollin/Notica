@@ -1,6 +1,6 @@
 {
   "name": "Notica",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Send browser notifications from your terminal. No installation. No registration.",
   "repository": {
     "type": "git",

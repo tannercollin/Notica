@@ -13,29 +13,26 @@ const app = express();
 
 var options = {
 	port: 3000,
-	host: "127.0.0.1",
-	url: ""
+	host: '127.0.0.1',
 };
 
 program.version(pjson.version)
-	.option('-p, --port <3000>', 'Port to host')
-	.option('-H, --host <127.0.0.1>', "Ip to host")
-	.option('-u, --url <path>', 'If this parameter is blank, will be use random id as url path');
+	.option('-p, --port <3000>', 'Host port')
+	.option('-H, --host <127.0.0.1>', 'Host IP');
 
 program.on('--help', function() {
-	console.log('  Examples:');
+	console.log('');
+	console.log('  Example:');
 	console.log('');
 	console.log('    $ npm start -- -p 80');
-	console.log('    $ npm start -- -p 8080 -u notification');
 	console.log('');
 });
 
 program.parse(process.argv);
 
-Object.keys(options)
-	.forEach(function(key) {
-		options[key] = program[key] || options[key];
-	});
+Object.keys(options).forEach(function(key) {
+	options[key] = program[key] || options[key];
+});
 
 const host = options.host;
 const port = options.port;
@@ -48,12 +45,9 @@ function log(message) {
 }
 
 function generateID() {
-	if(!options.url){
-		const bytes = crypto.randomBytes(30);
-		const string = base64url.encode(bytes);
-		return string.substring(0, 8);
-	}
-	return options.url;
+	const bytes = crypto.randomBytes(30);
+	const string = base64url.encode(bytes);
+	return string.substring(0, 8);
 }
 
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -98,7 +92,7 @@ io.on('connection', (socket) => {
 	var address = socket.handshake.address;
 	log('New connection from ' + address);
 	socket.on('room', (room) => {
-		log('Joining on room: '+room)		
+		log('New connection joining room: ' + room);
 		socket.join(room);
 	});
 });

@@ -30,8 +30,6 @@ export default class Home extends React.Component {
 
 		let room = this.props.id;
 
-
-
 		socket.on('connect', () => {
 			socket.emit('room', room);
 			this.setState({connected: true});
@@ -47,10 +45,10 @@ export default class Home extends React.Component {
 	}
 
 	sendNotification(data) {
-		let title = 'Notification from Notica' ;
+		let title = data || 'Received a notification!';
 
 		let options = {
-			body: data||'Received a notification!',
+			body: 'Notification from Notica',
 			icon: 'img/icon.png',
 			iconUrl: 'img/icon.png',
 			vibrate: [200, 100, 200]
@@ -97,7 +95,7 @@ export default class Home extends React.Component {
 		let supported = this.state.supported;
 		let haveperm = this.state.haveperm;
 		let connected = this.state.connected;
-		let url = location.href.split( '/' )[0]+"//"+location.href.split( '/' )[2]+'/';
+		let url = location.protocol + '//' + location.hostname + '/';
 
 		return (
 			<div className="container">
@@ -152,7 +150,7 @@ export default class Home extends React.Component {
 						<p>
 							Run this command: <br />
 							<code>
-								$ echo 'notica() &#123; curl --data "d:$*" {url}{id} ; &#125;' >> ~/.bashrc && source ~/.bashrc
+								$ echo 'notica() &#123; curl --data "d:$*" {url + id} ; &#125;' >> ~/.bashrc && source ~/.bashrc
 							</code>
 						</p>
 						<p>Now open this page on any devices you want to receive the notifications on: <a href={url + id}>{url + id}</a></p>
@@ -162,7 +160,7 @@ export default class Home extends React.Component {
 						<p>
 							Add this line to your <code className="smallcode">.bashrc</code> file:<br />
 							<code>
-								notica() &#123; curl --data "d:$*" {url}{id} ; &#125;
+								notica() &#123; curl --data "d:$*" {url + id} ; &#125;
 							</code>
 						</p>
 						<p>
@@ -219,7 +217,7 @@ export default class Home extends React.Component {
 						<p>Lose the link to this page? Just run Notica again: <br />
 							<code style={{display: 'block'}}>
 								$ notica <br />
-								{url}{id}
+								{url + id}
 							</code>
 						</p>
 						<p>
