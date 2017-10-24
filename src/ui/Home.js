@@ -30,6 +30,8 @@ export default class Home extends React.Component {
 
 		let room = this.props.id;
 
+
+
 		socket.on('connect', () => {
 			socket.emit('room', room);
 			this.setState({connected: true});
@@ -45,10 +47,10 @@ export default class Home extends React.Component {
 	}
 
 	sendNotification(data) {
-		let title = data || 'Received a notification!';
+		let title = 'Notification from Notica' ;
 
 		let options = {
-			body: 'Notification from Notica',
+			body: data||'Received a notification!',
 			icon: 'img/icon.png',
 			iconUrl: 'img/icon.png',
 			vibrate: [200, 100, 200]
@@ -95,6 +97,7 @@ export default class Home extends React.Component {
 		let supported = this.state.supported;
 		let haveperm = this.state.haveperm;
 		let connected = this.state.connected;
+		let url = location.href.split( '/' )[0]+"//"+location.href.split( '/' )[2]+'/';
 
 		return (
 			<div className="container">
@@ -149,17 +152,17 @@ export default class Home extends React.Component {
 						<p>
 							Run this command: <br />
 							<code>
-								$ echo 'notica() &#123; curl --data "d:$*" https://notica.us/{id} ; &#125;' >> ~/.bashrc && source ~/.bashrc
+								$ echo 'notica() &#123; curl --data "d:$*" {url}{id} ; &#125;' >> ~/.bashrc && source ~/.bashrc
 							</code>
 						</p>
-						<p>Now open this page on any devices you want to receive the notifications on: <a href={'https://notica.us/' + id}>{'https://notica.us/' + id}</a></p>
+						<p>Now open this page on any devices you want to receive the notifications on: <a href={url + id}>{url + id}</a></p>
 
 						<h4>Setup</h4>
 						<p>Curl is required to use Notica.</p>
 						<p>
 							Add this line to your <code className="smallcode">.bashrc</code> file:<br />
 							<code>
-								notica() &#123; curl --data "d:$*" https://notica.us/{id} ; &#125;
+								notica() &#123; curl --data "d:$*" {url}{id} ; &#125;
 							</code>
 						</p>
 						<p>
@@ -167,7 +170,7 @@ export default class Home extends React.Component {
 							<code>$ source .bashrc</code>
 						</p>
 						<p>
-							All done! Now open this page on any devices you want to receive the notifications on: <a href={'https://notica.us/' + id}>{'https://notica.us/' + id}</a><br />
+							All done! Now open this page on any devices you want to receive the notifications on: <a href={url + id}>{url + id}</a><br />
 						</p>
 						{ storSupport && <div className="storSupport"><p>
 							<i className="fa fa-info-circle" aria-hidden="true"></i> Notica uses Local Storage to keep track of your unique ID. If you would like to generate a new random ID, <a href="/clear">click here</a>.
@@ -216,7 +219,7 @@ export default class Home extends React.Component {
 						<p>Lose the link to this page? Just run Notica again: <br />
 							<code style={{display: 'block'}}>
 								$ notica <br />
-								https://notica.us/{id}
+								{url}{id}
 							</code>
 						</p>
 						<p>
@@ -227,7 +230,7 @@ export default class Home extends React.Component {
 						</p>
 						<p>
 							Open this page on your phone:
-							<center><QRCode value={'https://notica.us/' + id} /></center>
+							<center><QRCode value={url + id} /></center>
 						</p>
 					</div>
 				</div>

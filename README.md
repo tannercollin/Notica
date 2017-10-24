@@ -34,3 +34,26 @@ Notica is free and open-source software released under the MIT License.
 Hosting Notica on your own server is extremely easy.
 Clone this repository, change all notica.us URLs to your own domain, and then run `npm install && npm start`.
 You can connect to it directly or through a reverse proxy.
+
+### Usage
+
+```
+
+Usage: npm start -- [options]
+(After npm run build) Usage: node server.js [options]
+
+  Options:
+
+    -h, --help              output usage information
+    -V, --version           output the version number
+    -p, --port <3000>       Port to host
+    -H, --host <127.0.0.1>  Ip to host
+    -u, --url <path>        If this parameter is blank, will be use random id as
+ url path
+
+  Examples:
+
+    $ npm start -- -p 80
+    $ npm start -- -p 8080 -u notification
+
+```
