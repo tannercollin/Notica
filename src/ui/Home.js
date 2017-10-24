@@ -153,7 +153,7 @@ export default class Home extends React.Component {
 								$ echo 'notica() &#123; curl --data "d:$*" {url + id} ; &#125;' >> ~/.bashrc && source ~/.bashrc
 							</code>
 						</p>
-						<p>Now open this page on any devices you want to receive the notifications on: <a href={url + id}>{url + id}</a></p>
+						<p>Now open this page on any devices you want to receive the notifications on: <a href={url + id} rel="nofollow">{url + id}</a></p>
 
 						<h4>Setup</h4>
 						<p>Curl is required to use Notica.</p>
@@ -168,10 +168,10 @@ export default class Home extends React.Component {
 							<code>$ source .bashrc</code>
 						</p>
 						<p>
-							All done! Now open this page on any devices you want to receive the notifications on: <a href={url + id}>{url + id}</a><br />
+							All done! Now open this page on any devices you want to receive the notifications on: <a href={url + id} rel="nofollow">{url + id}</a><br />
 						</p>
 						{ storSupport && <div className="storSupport"><p>
-							<i className="fa fa-info-circle" aria-hidden="true"></i> Notica uses Local Storage to keep track of your unique ID. If you would like to generate a new random ID, <a href="/clear">click here</a>.
+							<i className="fa fa-info-circle" aria-hidden="true"></i> Notica uses Local Storage to keep track of your unique ID. If you would like to generate a new random ID, <a href="/clear" rel="nofollow">click here</a>.
 						</p></div>}
 					</div>
 				</div>
