@@ -14,11 +14,13 @@ const app = express();
 var options = {
 	port: 3000,
 	host: '127.0.0.1',
+	url: 'https://notica.us',
 };
 
 program.version(pjson.version)
 	.option('-p, --port <3000>', 'Host port')
-	.option('-H, --host <127.0.0.1>', 'Host IP');
+	.option('-H, --host <127.0.0.1>', 'Host IP')
+	.option('-U, --url <https://notica.us>', 'Website URL');
 
 program.on('--help', function() {
 	console.log('');
@@ -36,6 +38,7 @@ Object.keys(options).forEach(function(key) {
 
 const host = options.host;
 const port = options.port;
+const url = options.url;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'pug')
@@ -56,7 +59,8 @@ app.get('/*', (req, res) => {
 });
 
 app.post('*', (req, res) => {
-	let id = req.path.substring(1, 20); // Ignore first, truncate after 20
+	let id = req.path.substring(1, 20); // maintain backwards compat.
+	id = id || Object.keys(req.query)[0] || '';
 	let data = Object.keys(req.body)[0];
 
 	if (data && data.substring(0,2) === 'd:') {
@@ -70,7 +74,8 @@ app.post('*', (req, res) => {
 			res.end();
 		} else {
 			log('No one in room to send data to: ' + id);
-			res.send('No devices have that Notica ID open. Please open this URL: https://notica.us/' + id + '\n');
+			res.send('No devices have that Notica ID open. Please open this URL: '
+				+ url + '/?' + id + '\n');
 		}
 	} else {
 		log('Ignoring bad POST data to: ' + id);

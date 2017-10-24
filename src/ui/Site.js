@@ -49,19 +49,22 @@ export default class Site extends React.Component {
 
 	setPage() {
 		let url = this.props.params.splat;
+		let queryId = Object.keys(this.props.location.query)[0] || '';
 
 		if (url == 'clear') {
 			localStorage.clear();
 			url = '';
+			queryId = '';
 		}
 
-		if (url == '') {
+		if (url == '' && queryId == '') {
 			this.setId();
-			browserHistory.push('/' + this.state.id);
+			browserHistory.push('/?' + this.state.id);
 			this.state.page = <Home id={this.state.id} storSupport={this.state.storSupport} />;
 		}
-		else if (Shortid.isValid(url)) {
-			this.setId(url);
+		else if (Shortid.isValid(url) || Shortid.isValid(queryId)) {
+			let id = url || queryId;
+			this.setId(id);
 			this.state.page = <Home id={this.state.id} storSupport={this.state.storSupport} />;
 		}
 		else {
@@ -74,7 +77,7 @@ export default class Site extends React.Component {
 			<div>
 				<div className="hero">
 					<div className="title">
-						<Link to={'/' + this.state.id}>
+						<Link to={'/?' + this.state.id}>
 							<img src="/img/logo.svg" />
 							<span className="name">Notica</span>
 						</Link>
