@@ -129,7 +129,7 @@ export default class Home extends React.Component {
 					<div className="twelve columns">
 						<h4>Usage</h4>
 						<p>
-							Notica is a tool that sends a notification to a tab in your browser when it's ran:
+							Notica sends a notification to a tab in your browser when ran. It works over SSH and to your phone.
 						</p>
 					</div>
 				</div>
@@ -137,7 +137,7 @@ export default class Home extends React.Component {
 					<div className="six columns">
 						<p><code>$ long-running-command; notica Finished!</code></p>
 						<p>
-							This will wait until the first command completes before running Notica. That way you can go do other things while your long task runs. Then you will recieve a notification on any devices that have the Notica website open with your unique ID.
+							This will wait until the first command completes before running Notica. You can go do things while your long task runs, then you will recieve a notification on any pages that have this website open.
 						</p>
 					</div>
 					<div className="six columns">
