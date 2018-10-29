@@ -150,7 +150,7 @@ export default class Home extends React.Component {
 						<p>
 							Run this command: <br />
 							<code>
-								$ echo 'notica() &#123; curl --data "d:$*" {url + id} ; &#125;' >> ~/.bashrc && source ~/.bashrc
+								$ echo 'notica() &#123; curl --data "d:$*" "{url + id}" ; &#125;' >> ~/.bashrc && source ~/.bashrc
 							</code>
 						</p>
 						<p>Now open this page on any devices you want to receive the notifications on: <a href={url + id} rel="nofollow">{url + id}</a></p>
@@ -160,7 +160,7 @@ export default class Home extends React.Component {
 						<p>
 							Add this line to your <code className="smallcode">.bashrc</code> file:<br />
 							<code>
-								notica() &#123; curl --data "d:$*" {url + id} ; &#125;
+								notica() &#123; curl --data "d:$*" "{url + id}" ; &#125;
 							</code>
 						</p>
 						<p>

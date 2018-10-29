@@ -38,7 +38,6 @@ You can connect to it directly or through a reverse proxy.
 ### Usage
 
 ```text
-
 Usage: npm start -- [options]
 (After npm run build) Usage: node server.js [options]
 
@@ -52,5 +51,4 @@ Usage: npm start -- [options]
   Example:
 
     $ npm start -- -p 80
-
 ```
