@@ -43,12 +43,15 @@ Usage: npm start -- [options]
 
   Options:
 
-    -h, --help              output usage information
-    -V, --version           output the version number
-    -p, --port <3000>       Host port
-    -H, --host <127.0.0.1>  Host IP
+    -V, --version         output the version number
+    -p, --port <port>     Host port (3000)
+    -H, --host <IP>       Host IP (127.0.0.1)
+    -U, --url <URL>       Website URL (https://notica.us)
+    -t, --title <string>  Custom title ('Notification from Notica')
+    -i, --icon <path>     Custom icon (img/icon.png)
+    -h, --help            output usage information
 
   Example:
 
-    $ npm start -- -p 80
+    $ npm start -- -p 80 -t 'My cool Title'
 ```

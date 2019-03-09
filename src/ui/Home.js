@@ -45,19 +45,19 @@ export default class Home extends React.Component {
 	}
 
 	sendNotification(data) {
-		let title = data || 'Received a notification!';
+		let message = data || 'Received a notification!';
 
 		let options = {
-			body: 'Notification from Notica',
-			icon: 'img/icon.png',
-			iconUrl: 'img/icon.png',
+			body: title,
+			icon: icon,
+			iconUrl: icon,
 			vibrate: [200, 100, 200]
 		};
 
 		if (this.state.registration) {
-			this.state.registration.showNotification(title, options);
+			this.state.registration.showNotification(message, options);
 		} else {
-			new Notification(title, options);
+			new Notification(message, options);
 		}
 	}
 
