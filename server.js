@@ -74,12 +74,13 @@ app.post('*', (req, res) => {
 			res.end();
 		} else {
 			log('No one in room to send data to: ' + id);
-			res.send('No devices have that Notica ID open. Please open this URL: '
+			res.status(404).send('No devices have that Notica ID open. Please open this URL: '
 				+ url + '/?' + id + '\n');
 		}
 	} else {
+		log('WTF')
 		log('Ignoring bad POST data to: ' + id);
-		res.send('Bad POST data. Expecting prefix of "d:".\n');
+		res.status(400).send('Bad POST data. Expecting prefix of "d:".\n');
 	}
 });
 
