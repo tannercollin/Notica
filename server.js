@@ -15,18 +15,22 @@ var options = {
 	port: 3000,
 	host: '127.0.0.1',
 	url: 'https://notica.us',
+	title: 'Notification from Notica',
+	icon: 'img/icon.png',
 };
 
 program.version(pjson.version)
-	.option('-p, --port <3000>', 'Host port')
-	.option('-H, --host <127.0.0.1>', 'Host IP')
-	.option('-U, --url <https://notica.us>', 'Website URL');
+	.option('-p, --port <port>', 'Host port (3000)', '3000')
+	.option('-H, --host <IP>', 'Host IP (127.0.0.1)', '127.0.0.1')
+	.option('-U, --url <URL>', 'Website URL (https://notica.us)', 'https://notica.us')
+	.option('-t, --title <string>', 'Custom title (\'Notification from Notica\')', 'Notification from Notica')
+	.option('-i, --icon <path>', 'Custom icon (img/icon.png)', 'img/icon.png');
 
 program.on('--help', function() {
 	console.log('');
 	console.log('  Example:');
 	console.log('');
-	console.log('    $ npm start -- -p 80');
+	console.log('    $ npm start -- -p 80 -t \'My cool Title\'');
 	console.log('');
 });
 
@@ -39,6 +43,8 @@ Object.keys(options).forEach(function(key) {
 const host = options.host;
 const port = options.port;
 const url = options.url;
+const title = options.title;
+const icon = options.icon;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'pug')
@@ -55,7 +61,7 @@ function generateID() {
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.get('/*', (req, res) => {
-	res.render('index', { secureID: generateID() })
+	res.render('index', { secureID: generateID(), title: title, icon: icon })
 });
 
 app.post('*', (req, res) => {
