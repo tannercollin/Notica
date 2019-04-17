@@ -12,11 +12,14 @@ export default class Home extends React.Component {
 			registration: null,
 			haveperm: false,
 			connected: false,
-			socket: io.connect()
+			socket: io.connect(),
+			storSupport: (typeof localStorage !== 'undefined'),
+			alerts: new Array(),
 		}
 	}
 
 	componentDidMount() {
+		this.getAlerts();
 		this.connect();
 		this.checksupport();
 	}
@@ -41,7 +44,36 @@ export default class Home extends React.Component {
 
 		socket.on('message', (data) => {
 			this.sendNotification(data);
+			this.addAlert(data)
 		});
+	}
+
+	addAlert(data) {
+		if (this.state.storSupport) {
+			let id = this.state.alerts.length
+			localStorage.setItem("alert-" + id, data)
+		}
+		this.setState(prevState => (
+				{alerts: [...prevState.alerts, data]}
+			)
+		)
+		console.log("Added alert ", this.state.alerts)
+	}
+
+	getAlerts() {
+		if (this.state.storSupport) {
+			let alerts = new Array()
+			for (var i = 0; i < localStorage.length; i++) {
+				var key = localStorage.key(i);
+				if (key.substring(0, 5) == "alert") {
+					var item = localStorage.getItem(key);
+					var todoItem = item
+					//var todoItem = JSON.parse(item);
+					alerts.push(todoItem);
+			   }
+			}
+			this.setState({alerts: alerts})
+		}
 	}
 
 	sendNotification(data) {
@@ -96,11 +128,24 @@ export default class Home extends React.Component {
 		let haveperm = this.state.haveperm;
 		let connected = this.state.connected;
 		let url = location.protocol + '//' + location.hostname + '/?';
+		let alerts = this.state.alerts.map((value,index) => {
+			return <li key={index}>{value}</li>
+		});
 
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="twelve columns">
+						<h4>Notifications</h4>
+						{ storSupport && <div className="alerts"><ul>
+							{alerts}
+						</ul></div>}
+					</div>
+				</div>
+				<div className="row">
+					<div className="twelve columns">
+						<h4>Status</h4>
+
 						{ supported || <div className="error"><p>
 							<i className="fa fa-times" aria-hidden="true"></i> This browser does not support desktop notifications.
 						</p></div>}
