@@ -95,7 +95,7 @@ export default class Home extends React.Component {
 		let supported = this.state.supported;
 		let haveperm = this.state.haveperm;
 		let connected = this.state.connected;
-		let url = location.protocol + '//' + location.hostname + '/?';
+		let url = location.protocol + '//' + location.hostname + ':' + location.port + '/?';
 
 		return (
 			<div className="container">
