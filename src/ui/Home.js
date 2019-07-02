@@ -90,12 +90,13 @@ export default class Home extends React.Component {
 	}
 
 	render(){
-		let id = this.props.id;
-		let storSupport = this.props.storSupport;
-		let supported = this.state.supported;
-		let haveperm = this.state.haveperm;
-		let connected = this.state.connected;
-		let url = location.protocol + '//' + location.hostname + ':' + location.port + '/?';
+		const id = this.props.id;
+		const storSupport = this.props.storSupport;
+		const supported = this.state.supported;
+		const haveperm = this.state.haveperm;
+		const connected = this.state.connected;
+		const port = location.port ? ':' + location.port : '';
+		const url = location.protocol + '//' + location.hostname + port + '/?';
 
 		return (
 			<div className="container">
