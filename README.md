@@ -32,14 +32,13 @@ Notica is free and open-source software released under the MIT License.
 ### Self-hosting
 
 Hosting Notica on your own server is extremely easy.
-Clone this repository, change all notica.us URLs to your own domain, and then run `npm install && npm start`.
+Clone this repository, change all notica.us URLs to your own domain, and then run `yarn install && yarn start`.
 You can connect to it directly or through a reverse proxy.
 
 ### Usage
 
 ```text
-Usage: npm start -- [options]
-(After npm run build) Usage: node server.js [options]
+Usage: yarn start [options]
 
   Options:
 
@@ -53,5 +52,5 @@ Usage: npm start -- [options]
 
   Example:
 
-    $ npm start -- -p 80 -t 'My cool Title'
+    $ yarn start -p 1234 -t 'My cool Title'
 ```

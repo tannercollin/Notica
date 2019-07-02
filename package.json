@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "node serverdev.js",
     "build": "webpack --config ./webpack.production.config.js --profile --display-error-details --no-color",
-    "start": "npm run build && node server.js",
+    "start": "yarn run build && node server.js",
     "lint": "eslint src"
   },
   "author": "Tanner Collin (http://github.com/tannercollin)",
