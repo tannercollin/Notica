@@ -33,7 +33,6 @@ Notica is free and open-source software released under the MIT License.
 
 Hosting Notica on your own server is extremely easy.
 Clone this repository, change all notica.us URLs to your own domain, and then run `yarn install && yarn start`.
-You can connect to it directly or through a reverse proxy.
 
 ### Usage
 
@@ -54,3 +53,46 @@ Usage: yarn start [options]
 
     $ yarn start -p 1234 -t 'My cool Title'
 ```
+
+### Reverse Proxy
+
+For security, it is recommended to run Notica behind a reverse proxy as a separate non-privileged user.
+
+Here's a sample nginx reverse proxy config:
+
+```
+server {
+    listen 80;
+    listen [::]:80;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name notica.us;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+And Apache:
+
+```
+<VirtualHost *:80>
+    ServerName notica.us
+
+    ProxyPass / http://127.0.0.1:3000/
+    ProxyPassReverse / http://127.0.0.1:3000/
+    ProxyPreserveHost On
+
+    ErrorLog ${APACHE_LOG_DIR}/notica-error.log
+    CustomLog ${APACHE_LOG_DIR}/notica-access.log combined
+</VirtualHost>
+```
+
+SSL is left as an exercise for the reader :)
