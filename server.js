@@ -56,7 +56,7 @@ function log(message) {
 function generateID() {
 	const bytes = crypto.randomBytes(30);
 	const string = base64url.encode(bytes);
-	return string.substring(0, 8);
+	return string.substring(0, 6);
 }
 
 app.use('/', express.static(path.join(__dirname, 'public')));
