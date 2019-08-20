@@ -96,3 +96,29 @@ And Apache:
 ```
 
 SSL is left as an exercise for the reader :)
+
+### Process Control
+
+I recommend using `supervisor` to auto-start and keep Notica running.
+
+```
+$ sudo apt install supervisor
+$ sudo adduser --disabled-login --gecos '' --shell /bin/false notica
+$ sudo chown -R notica:notica /opt/Notica
+```
+
+Add to `/etc/supervisor/supervisord.conf` or its own file:
+
+```
+[program:notica]
+user=notica
+directory=/opt/Notica
+command=node server.js
+autorestart=true
+stopasgroup=true
+killasgroup=true
+stderr_logfile=/var/log/notica.log
+stderr_logfile_maxbytes=10MB
+stdout_logfile=/var/log/notica.log
+stdout_logfile_maxbytes=10MB
+```
