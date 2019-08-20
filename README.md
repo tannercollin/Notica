@@ -80,7 +80,14 @@ server {
 }
 ```
 
-And Apache:
+Add SSL with certbot:
+
+```
+$ sudo apt install certbot python-certbot-nginx
+$ sudo certbot --nginx
+```
+
+Or Apache:
 
 ```
 <VirtualHost *:80>
@@ -95,7 +102,7 @@ And Apache:
 </VirtualHost>
 ```
 
-SSL is left as an exercise for the reader :)
+Apache SSL is left as an exercise for the reader :)
 
 ### Process Control
 
