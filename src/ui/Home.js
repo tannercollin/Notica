@@ -19,9 +19,10 @@ export default class Home extends React.Component {
 	}
 
 	componentDidMount() {
+		this.checksupport();
+		this.checkperm();
 		this.getAlerts();
 		this.connect();
-		this.checksupport();
 	}
 
 	componentWillUnmount() {
@@ -96,10 +97,12 @@ export default class Home extends React.Component {
 	checksupport() {
 		let supported = ('Notification' in window);
 		this.setState({supported: supported});
+	}
 
-		if (supported) {
+	askperm() {
+		if (this.state.supported) {
 			Notification.requestPermission(permission => {
-				this.checkperm(permission);
+				this.checkperm();
 
 				try {
 					navigator.serviceWorker.register('/js/sw.js').then((reg) => {
@@ -112,8 +115,8 @@ export default class Home extends React.Component {
 		}
 	}
 
-	checkperm(permission) {
-		if (permission === 'granted') {
+	checkperm() {
+		if (Notification.permission === 'granted') {
 			this.setState({haveperm: true});
 		}
 		else {
@@ -127,6 +130,7 @@ export default class Home extends React.Component {
 		let supported = this.state.supported;
 		let haveperm = this.state.haveperm;
 		let connected = this.state.connected;
+		const port = location.port ? ':' + location.port : '';
 		let url = location.protocol + '//' + location.hostname + '/?';
 		let alerts = this.state.alerts.map((value,index) => {
 			return <li key={index}>{value}</li>
@@ -152,9 +156,10 @@ export default class Home extends React.Component {
 						{ !haveperm && supported && <div>
 							<p>
 								Please give this site permission to display notifications.
-								<br />
-								<a className="button" href="javascript:void(0)" onClick={() => this.checkperm(Notification.permission)}>
-									Check Again
+							</p>
+							<p>
+								<a className="button" href="javascript:void(0)" onClick={() => this.askperm()}>
+									Allow Notifications
 								</a>
 							</p>
 						</div>}

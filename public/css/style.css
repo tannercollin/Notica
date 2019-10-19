@@ -28,7 +28,11 @@ body {
 
 .tagline {
 	padding-bottom: 2.5rem;
-	font-size: 1.75rem;
+	font-size: 2rem;
+}
+
+.container {
+	font-size: 2rem;
 }
 
 .content {

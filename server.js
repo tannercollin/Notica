@@ -46,6 +46,10 @@ const url = options.url;
 const title = options.title;
 const icon = options.icon;
 
+if (port == 80 || port == 443) {
+	console.log('WARNING: For security, you should run Notica behind a reverse proxy. See README.');
+}
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('view engine', 'pug')
 
@@ -56,7 +60,7 @@ function log(message) {
 function generateID() {
 	const bytes = crypto.randomBytes(30);
 	const string = base64url.encode(bytes);
-	return string.substring(0, 8);
+	return string.substring(0, 6);
 }
 
 app.use('/', express.static(path.join(__dirname, 'public')));
