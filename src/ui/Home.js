@@ -2,6 +2,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import QRCode from 'qrcode.react';
+import { thisTypeAnnotation } from 'babel-types';
 
 export default class Home extends React.Component {
 	constructor(props) {
@@ -45,35 +46,35 @@ export default class Home extends React.Component {
 
 		socket.on('message', (data) => {
 			this.sendNotification(data);
-			this.addAlert(data)
+			this.addAlert(data);
 		});
 	}
 
 	addAlert(data) {
 		if (this.state.storSupport) {
-			let id = this.state.alerts.length
-			localStorage.setItem("alert-" + id, data)
+			let alerts = this.state.alerts;
+			alerts.push(data);
+			localStorage.setItem('alerts', JSON.stringify(alerts));
+			this.getAlerts();
 		}
-		this.setState(prevState => (
-				{alerts: [...prevState.alerts, data]}
-			)
-		)
-		console.log("Added alert ", this.state.alerts)
 	}
 
 	getAlerts() {
 		if (this.state.storSupport) {
-			let alerts = new Array()
-			for (var i = 0; i < localStorage.length; i++) {
-				var key = localStorage.key(i);
-				if (key.substring(0, 5) == "alert") {
-					var item = localStorage.getItem(key);
-					var todoItem = item
-					//var todoItem = JSON.parse(item);
-					alerts.push(todoItem);
-			   }
+			let alerts = new Array();
+			let alertsJson = localStorage.getItem('alerts');
+			if (alertsJson != null) {
+				alerts = JSON.parse(alertsJson);
 			}
-			this.setState({alerts: alerts})
+			this.setState({alerts: alerts});
+		}
+	}
+	clearAlerts() {
+		if (this.state.storSupport) {
+			if (localStorage.getItem('alerts') != null) {
+				localStorage.removeItem('alerts');
+			}
+			this.getAlerts();
 		}
 	}
 
@@ -141,9 +142,16 @@ export default class Home extends React.Component {
 				<div className="row">
 					<div className="twelve columns">
 						<h4>Notifications</h4>
-						{ storSupport && <div className="alerts"><ul>
-							{alerts}
-						</ul></div>}
+
+						{ !storSupport && <div className="error"><p>
+							<i className="fa fa-times" aria-hidden="true"></i>This browser does not support local storage so it is unable to save notifications.
+						</p></div>}
+						{ storSupport && <div>
+							<div className="alerts">
+								<ul>{alerts}</ul>
+							</div>
+							<a className="button" href="javascript:void(0)" onClick={() => this.clearAlerts()}>Clear</a>
+						</div>}
 					</div>
 				</div>
 				<div className="row">
