@@ -142,21 +142,6 @@ export default class Home extends React.Component {
 			<div className="container">
 				<div className="row">
 					<div className="twelve columns">
-						<h4>Notifications</h4>
-
-						{ !storSupport && <div className="error"><p>
-							<i className="fa fa-times" aria-hidden="true"></i>This browser does not support local storage so it is unable to save notifications.
-						</p></div>}
-						{ storSupport && <div>
-							<div className="alerts">
-								<ul>{alerts}</ul>
-							</div>
-							<a className="button" href="javascript:void(0)" onClick={() => this.clearAlerts()}>Clear</a>
-						</div>}
-					</div>
-				</div>
-				<div className="row">
-					<div className="twelve columns">
 						<h4>Status</h4>
 
 						{ supported || <div className="error"><p>
@@ -184,6 +169,23 @@ export default class Home extends React.Component {
 						</p>}
 					</div>
 				</div>
+				{!!alerts.length && <div className="row">
+					<div className="twelve columns">
+						<h4>Previous Notifications</h4>
+
+						{ !storSupport && <div className="error"><p>
+							<i className="fa fa-times" aria-hidden="true"></i>This browser does not support local storage so it is unable to save notifications.
+						</p></div>}
+						{ storSupport && <div>
+							<div className="alerts">
+								<ul>{alerts}</ul>
+							</div>
+							<p>
+								<a className="button" href="javascript:void(0)" onClick={() => this.clearAlerts()}>Clear</a>
+							</p>
+						</div>}
+					</div>
+				</div>}
 				<div className="row">
 					<div className="twelve columns">
 						<h4>Usage</h4>
