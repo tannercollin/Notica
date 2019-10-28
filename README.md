@@ -25,10 +25,6 @@ https://notica.us/
 
 ## Source Code
 
-### License
-
-Notica is free and open-source software released under the MIT License.
-
 ### Self-hosting
 
 Hosting Notica on your own server is extremely easy.
@@ -104,7 +100,7 @@ Or Apache:
 
 Apache SSL is left as an exercise for the reader :)
 
-### Process Control
+#### Process Control
 
 I recommend using `supervisor` to auto-start and keep Notica running.
 
@@ -157,3 +153,13 @@ docker run -d \
   -e TZ=Europe/London \
 notica
 ```
+
+## License
+
+This program is free and open-source software licensed under the MIT License. Please see the `LICENSE` file for details.
+
+That means you have the right to study, change, and distribute the software and source code to anyone and for any purpose. You deserve these rights. Please take advantage of them because I like pull requests and would love to see this code put to use.
+
+## Acknowledgements
+
+Thanks to welbert, damc-dev, scribblemaniac, and lukasmrtvy for their contributions.
