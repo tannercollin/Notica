@@ -2,7 +2,6 @@
 import React from 'react';
 import io from 'socket.io-client';
 import QRCode from 'qrcode.react';
-import { thisTypeAnnotation } from 'babel-types';
 
 export default class Home extends React.Component {
 	constructor(props) {
@@ -69,6 +68,7 @@ export default class Home extends React.Component {
 			this.setState({alerts: alerts});
 		}
 	}
+
 	clearAlerts() {
 		if (this.state.storSupport) {
 			if (localStorage.getItem('alerts') != null) {
@@ -126,16 +126,17 @@ export default class Home extends React.Component {
 	}
 
 	render(){
-		let id = this.props.id;
-		let storSupport = this.props.storSupport;
-		let supported = this.state.supported;
-		let haveperm = this.state.haveperm;
-		let connected = this.state.connected;
+		const id = this.props.id;
+		const storSupport = this.props.storSupport;
+		const supported = this.state.supported;
+		const haveperm = this.state.haveperm;
+		const connected = this.state.connected;
+
 		const port = location.port ? ':' + location.port : '';
-		let url = location.protocol + '//' + location.hostname + '/?';
-		let alerts = this.state.alerts.map((value,index) => {
-			return <li key={index}>{value}</li>
-		});
+		const url = location.protocol + '//' + location.hostname + '/?';
+		const alerts = this.state.alerts.map((value,index) =>
+			<li key={index}>{value}</li>
+		);
 
 		return (
 			<div className="container">
