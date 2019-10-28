@@ -52,7 +52,7 @@ export default class Home extends React.Component {
 	addAlert(data) {
 		if (this.state.storSupport) {
 			let alerts = this.state.alerts;
-			alerts.push(data);
+			alerts.unshift(data);
 			localStorage.setItem('alerts', JSON.stringify(alerts));
 			this.getAlerts();
 		}
