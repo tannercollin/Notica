@@ -54,6 +54,28 @@ Usage: yarn start [options]
     $ yarn start -p 1234 -t 'My cool Title'
 ```
 
+### Docker
+#### Build
+```
+docker build -t notica .
+```
+#### Run
+```
+docker run --rm -it -p 3000:3000 notica
+```
+#### With Traefik Reverse Proxy
+```
+docker run -d \
+  --name notica \
+  --restart unless-stopped \
+  --label "traefik.enable=true" \
+  --label "traefik.frontend.rule=Host:notica.example.com" \
+  --label "traefik.port=3000" \
+  --network traefik-network \
+  -e TZ=Europe/London \
+notica
+```
+
 ### Reverse Proxy
 
 For security, it is recommended to run Notica behind a reverse proxy as a separate non-privileged user.
