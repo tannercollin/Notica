@@ -2,6 +2,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import QRCode from 'qrcode.react';
+import { thisTypeAnnotation } from 'babel-types';
 
 export default class Home extends React.Component {
 	constructor(props) {
@@ -12,13 +13,16 @@ export default class Home extends React.Component {
 			registration: null,
 			haveperm: false,
 			connected: false,
-			socket: io.connect()
+			socket: io.connect(),
+			storSupport: (typeof localStorage !== 'undefined'),
+			alerts: new Array(),
 		}
 	}
 
 	componentDidMount() {
 		this.checksupport();
 		this.checkperm();
+		this.getAlerts();
 		this.connect();
 	}
 
@@ -42,7 +46,36 @@ export default class Home extends React.Component {
 
 		socket.on('message', (data) => {
 			this.sendNotification(data);
+			this.addAlert(data);
 		});
+	}
+
+	addAlert(data) {
+		if (this.state.storSupport) {
+			let alerts = this.state.alerts;
+			alerts.push(data);
+			localStorage.setItem('alerts', JSON.stringify(alerts));
+			this.getAlerts();
+		}
+	}
+
+	getAlerts() {
+		if (this.state.storSupport) {
+			let alerts = new Array();
+			let alertsJson = localStorage.getItem('alerts');
+			if (alertsJson != null) {
+				alerts = JSON.parse(alertsJson);
+			}
+			this.setState({alerts: alerts});
+		}
+	}
+	clearAlerts() {
+		if (this.state.storSupport) {
+			if (localStorage.getItem('alerts') != null) {
+				localStorage.removeItem('alerts');
+			}
+			this.getAlerts();
+		}
 	}
 
 	sendNotification(data) {
@@ -93,18 +126,38 @@ export default class Home extends React.Component {
 	}
 
 	render(){
-		const id = this.props.id;
-		const storSupport = this.props.storSupport;
-		const supported = this.state.supported;
-		const haveperm = this.state.haveperm;
-		const connected = this.state.connected;
+		let id = this.props.id;
+		let storSupport = this.props.storSupport;
+		let supported = this.state.supported;
+		let haveperm = this.state.haveperm;
+		let connected = this.state.connected;
 		const port = location.port ? ':' + location.port : '';
-		const url = location.protocol + '//' + location.hostname + port + '/?';
+		let url = location.protocol + '//' + location.hostname + '/?';
+		let alerts = this.state.alerts.map((value,index) => {
+			return <li key={index}>{value}</li>
+		});
 
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="twelve columns">
+						<h4>Notifications</h4>
+
+						{ !storSupport && <div className="error"><p>
+							<i className="fa fa-times" aria-hidden="true"></i>This browser does not support local storage so it is unable to save notifications.
+						</p></div>}
+						{ storSupport && <div>
+							<div className="alerts">
+								<ul>{alerts}</ul>
+							</div>
+							<a className="button" href="javascript:void(0)" onClick={() => this.clearAlerts()}>Clear</a>
+						</div>}
+					</div>
+				</div>
+				<div className="row">
+					<div className="twelve columns">
+						<h4>Status</h4>
+
 						{ supported || <div className="error"><p>
 							<i className="fa fa-times" aria-hidden="true"></i> This browser does not support desktop notifications.
 						</p></div>}
