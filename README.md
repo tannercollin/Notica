@@ -25,16 +25,12 @@ https://notica.us/
 
 ## Source Code
 
-### License
-
-Notica is free and open-source software released under the MIT License.
-
 ### Self-hosting
 
 Hosting Notica on your own server is extremely easy.
 Clone this repository, change all notica.us URLs to your own domain, and then run `yarn install && yarn start`.
 
-### Usage
+#### Usage
 
 ```text
 Usage: yarn start [options]
@@ -54,7 +50,7 @@ Usage: yarn start [options]
     $ yarn start -p 1234 -t 'My cool Title'
 ```
 
-### Reverse Proxy
+#### Reverse Proxy
 
 For security, it is recommended to run Notica behind a reverse proxy as a separate non-privileged user.
 
@@ -104,7 +100,7 @@ Or Apache:
 
 Apache SSL is left as an exercise for the reader :)
 
-### Process Control
+#### Process Control
 
 I recommend using `supervisor` to auto-start and keep Notica running.
 
@@ -129,3 +125,41 @@ stderr_logfile_maxbytes=10MB
 stdout_logfile=/var/log/notica.log
 stdout_logfile_maxbytes=10MB
 ```
+
+### Self-hosting with Docker
+
+#### Build
+
+```
+docker build -t notica .
+```
+
+#### Run
+
+```
+docker run --rm -it -p 3000:3000 notica
+```
+
+#### With Traefik Reverse Proxy
+
+```
+docker run -d \
+  --name notica \
+  --restart unless-stopped \
+  --label "traefik.enable=true" \
+  --label "traefik.frontend.rule=Host:notica.example.com" \
+  --label "traefik.port=3000" \
+  --network traefik-network \
+  -e TZ=Europe/London \
+notica
+```
+
+## License
+
+This program is free and open-source software licensed under the MIT License. Please see the `LICENSE` file for details.
+
+That means you have the right to study, change, and distribute the software and source code to anyone and for any purpose. You deserve these rights. Please take advantage of them because I like pull requests and would love to see this code put to use.
+
+## Acknowledgements
+
+Thanks to welbert, damc-dev, scribblemaniac, and lukasmrtvy for their contributions.

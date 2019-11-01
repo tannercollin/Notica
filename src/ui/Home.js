@@ -12,13 +12,16 @@ export default class Home extends React.Component {
 			registration: null,
 			haveperm: false,
 			connected: false,
-			socket: io.connect()
+			socket: io.connect(),
+			storSupport: (typeof localStorage !== 'undefined'),
+			alerts: new Array(),
 		}
 	}
 
 	componentDidMount() {
 		this.checksupport();
 		this.checkperm();
+		this.getAlerts();
 		this.connect();
 	}
 
@@ -42,7 +45,37 @@ export default class Home extends React.Component {
 
 		socket.on('message', (data) => {
 			this.sendNotification(data);
+			this.addAlert(data);
 		});
+	}
+
+	addAlert(data) {
+		if (this.state.storSupport) {
+			let alerts = this.state.alerts;
+			alerts.unshift(data);
+			localStorage.setItem('alerts', JSON.stringify(alerts));
+			this.getAlerts();
+		}
+	}
+
+	getAlerts() {
+		if (this.state.storSupport) {
+			let alerts = new Array();
+			let alertsJson = localStorage.getItem('alerts');
+			if (alertsJson != null) {
+				alerts = JSON.parse(alertsJson);
+			}
+			this.setState({alerts: alerts});
+		}
+	}
+
+	clearAlerts() {
+		if (this.state.storSupport) {
+			if (localStorage.getItem('alerts') != null) {
+				localStorage.removeItem('alerts');
+			}
+			this.getAlerts();
+		}
 	}
 
 	sendNotification(data) {
@@ -98,13 +131,19 @@ export default class Home extends React.Component {
 		const supported = this.state.supported;
 		const haveperm = this.state.haveperm;
 		const connected = this.state.connected;
+
 		const port = location.port ? ':' + location.port : '';
-		const url = location.protocol + '//' + location.hostname + port + '/?';
+		const url = location.protocol + '//' + location.hostname + '/?';
+		const alerts = this.state.alerts.map((value,index) =>
+			<li key={index}>{value}</li>
+		);
 
 		return (
 			<div className="container">
 				<div className="row">
 					<div className="twelve columns">
+						<h4>Status</h4>
+
 						{ supported || <div className="error"><p>
 							<i className="fa fa-times" aria-hidden="true"></i> This browser does not support desktop notifications.
 						</p></div>}
@@ -130,6 +169,23 @@ export default class Home extends React.Component {
 						</p>}
 					</div>
 				</div>
+				{!!alerts.length && <div className="row">
+					<div className="twelve columns">
+						<h4>Previous Notifications</h4>
+
+						{ !storSupport && <div className="error"><p>
+							<i className="fa fa-times" aria-hidden="true"></i>This browser does not support local storage so it is unable to save notifications.
+						</p></div>}
+						{ storSupport && <div>
+							<div className="alerts">
+								<ul>{alerts}</ul>
+							</div>
+							<p>
+								<a className="button" href="javascript:void(0)" onClick={() => this.clearAlerts()}>Clear</a>
+							</p>
+						</div>}
+					</div>
+				</div>}
 				<div className="row">
 					<div className="twelve columns">
 						<h4>Usage</h4>
