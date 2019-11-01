@@ -57,7 +57,7 @@ code {
 	padding: 0;
 }
 
-.alert {
+.alerts li{
     box-shadow: 0 0.1rem 0.3rem #555;
     border-radius: .3rem;
     list-style-type: none;
