@@ -33,7 +33,7 @@
     "commander": "^2.9.0",
     "freezer-js": "^0.6.0",
     "moment": "^2.29.2",
-    "pug": "^2.0.0-beta6",
+    "pug": "^3.0.1",
     "qrcode.react": "^0.6.1",
     "react": "^0.13.0",
     "react-router": "^2.0.0",
