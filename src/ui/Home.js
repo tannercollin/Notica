@@ -135,7 +135,7 @@ export default class Home extends React.Component {
 		const port = location.port ? ':' + location.port : '';
 		const url = location.protocol + '//' + location.hostname + '/?';
 		const alerts = this.state.alerts.map((value,index) =>
-			<li key={index}>{value}</li>
+			<li key={index} className="alert">{value}</li>
 		);
 
 		return (
